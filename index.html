@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A/D Line - 叠加上证指数</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0f1923;
+  color: #e0e0e0;
+  font-family: -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  padding: 24px;
+}
+.container { max-width: 960px; margin: 0 auto; }
+.header { margin-bottom: 24px; }
+.header h1 { font-size: 22px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.header .sub { font-size: 13px; color: #8899aa; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: #1a2736;
+  border-radius: 10px;
+  padding: 14px 16px;
+  border: 1px solid #1e3040;
+}
+.stat-card .label { font-size: 11px; color: #6b7f94; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-card .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+.stat-card .value.up { color: #22ab94; }
+.stat-card .value.down { color: #e0524a; }
+.stat-card .subtext { font-size: 11px; color: #5a7a8a; margin-top: 2px; }
+.chart-box {
+  background: #1a2736;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #1e3040;
+  margin-bottom: 20px;
+}
+.chart-box h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #8aaabc;
+  margin-bottom: 12px;
+}
+canvas { width: 100% !important; }
+.data-table {
+  background: #1a2736;
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid #1e3040;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.data-table h3 { font-size: 14px; font-weight: 500; color: #8aaabc; margin-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th {
+  text-align: right; padding: 6px 8px; color: #5a7a8a;
+  border-bottom: 1px solid #1e3040; position: sticky; top: 0;
+  background: #1a2736; font-weight: 500;
+}
+th:first-child { text-align: left; }
+td { text-align: right; padding: 5px 8px; border-bottom: 1px solid #15232e; }
+td:first-child { text-align: left; color: #8aaabc; }
+td.up { color: #22ab94; } td.down { color: #e0524a; }
+.table-wrapper { max-height: 260px; overflow-y: auto; }
+.table-wrapper::-webkit-scrollbar { width: 4px; }
+.table-wrapper::-webkit-scrollbar-thumb { background: #2a4050; border-radius: 2px; }
+.legend-box {
+  display: flex; gap: 20px; margin-bottom: 12px;
+  font-size: 12px; color: #8aaabc;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 12px; height: 3px; border-radius: 2px; display: inline-block; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>📊 A/D Line × 上证指数</h1>
+    <div class="sub">2026-03-23 ~ 2026-04-24 · A股涨跌比线 vs 大盘走势</div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="chart-box">
+    <h3>📈 A/D Line + 上证指数（双轴）</h3>
+    <div class="legend-box">
+      <div class="legend-item"><span class="legend-dot" style="background:#22ab94"></span> A/D Line（累计涨跌差）</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#f0b429"></span> 上证指数</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#e0524a"></span> A/D < 0 · A/D > 0</div>
+    </div>
+    <canvas id="adChart"></canvas>
+  </div>
+
+  <div class="chart-box">
+    <h3>📊 每日涨跌差</h3>
+    <canvas id="diffChart"></canvas>
+  </div>
+
+  <div class="data-table">
+    <h3>📋 逐日数据</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>上涨</th>
+            <th>下跌</th>
+            <th>涨跌差</th>
+            <th>累计 A/D</th>
+            <th>上证指数</th>
+            <th>上证涨跌</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const adData = [
+  { date: '03-23', up: 0, dn: 0, flat: 0, diff: 0, cum: 0 },
+  { date: '03-24', up: 4865, dn: 298, flat: 16, diff: 4567, cum: 4567 },
+  { date: '03-25', up: 4613, dn: 521, flat: 45, diff: 4092, cum: 8659 },
+  { date: '03-26', up: 876, dn: 4234, flat: 69, diff: -3358, cum: 5301 },
+  { date: '03-27', up: 4155, dn: 957, flat: 63, diff: 3198, cum: 8499 },
+  { date: '03-30', up: 2804, dn: 2230, flat: 137, diff: 574, cum: 9073 },
+  { date: '03-31', up: 899, dn: 4187, flat: 84, diff: -3288, cum: 5785 },
+  { date: '04-01', up: 4226, dn: 849, flat: 101, diff: 3377, cum: 9162 },
+  { date: '04-02', up: 893, dn: 4235, flat: 50, diff: -3342, cum: 5820 },
+  { date: '04-03', up: 696, dn: 4459, flat: 24, diff: -3763, cum: 2057 },
+  { date: '04-07', up: 3804, dn: 1298, flat: 75, diff: 2506, cum: 4563 },
+  { date: '04-08', up: 4874, dn: 290, flat: 14, diff: 4584, cum: 9147 },
+  { date: '04-09', up: 1114, dn: 4018, flat: 52, diff: -2904, cum: 6243 },
+  { date: '04-10', up: 3705, dn: 1362, flat: 118, diff: 2343, cum: 8586 },
+  { date: '04-13', up: 2315, dn: 2719, flat: 151, diff: -404, cum: 8182 },
+  { date: '04-14', up: 3514, dn: 1503, flat: 169, diff: 2011, cum: 10193 },
+  { date: '04-15', up: 1702, dn: 3386, flat: 99, diff: -1684, cum: 8509 },
+  { date: '04-16', up: 4062, dn: 1003, flat: 122, diff: 3059, cum: 11568 },
+  { date: '04-17', up: 2090, dn: 2983, flat: 114, diff: -893, cum: 10675 },
+  { date: '04-20', up: 3196, dn: 1820, flat: 166, diff: 1376, cum: 12051 },
+  { date: '04-21', up: 1911, dn: 3153, flat: 116, diff: -1242, cum: 10809 },
+  { date: '04-22', up: 2656, dn: 2388, flat: 141, diff: 268, cum: 11077 },
+  { date: '04-23', up: 1303, dn: 3796, flat: 86, diff: -2493, cum: 8584 },
+  { date: '04-24', up: 1992, dn: 3083, flat: 107, diff: -1091, cum: 7493 },
+];
+
+const shIndexData = {
+  '03-23': 3813.28, '03-24': 3881.28, '03-25': 3931.84,
+  '03-26': 3889.08, '03-27': 3913.72, '03-30': 3923.29,
+  '03-31': 3891.86, '04-01': 3948.55, '04-02': 3919.29,
+  '04-03': 3880.10, '04-07': 3890.16, '04-08': 3995.00,
+  '04-09': 3966.17, '04-10': 3986.22, '04-13': 3988.56,
+  '04-14': 4026.63, '04-15': 4027.21, '04-16': 4055.55,
+  '04-17': 4051.43, '04-20': 4082.13, '04-21': 4085.08,
+  '04-22': 4106.26, '04-23': 4093.25, '04-24': 4079.90,
+};
+
+// Stats
+const finalCum = adData[adData.length-1].cum;
+const maxCum = Math.max(...adData.map(d => d.cum));
+const avgDiff = Math.round(adData.slice(1).reduce((s,d) => s + d.diff, 0) / (adData.length-1));
+const maxUpDay = adData.slice(1).reduce((a,b) => a.up > b.up ? a : b);
+const maxDnDay = adData.slice(1).reduce((a,b) => a.dn > b.dn ? a : b);
+
+const shFirst = shIndexData['03-23'];
+const shLast = shIndexData['04-24'];
+const shChange = ((shLast - shFirst) / shFirst * 100).toFixed(2);
+
+document.getElementById('stats').innerHTML = `
+  <div class="stat-card">
+    <div class="label">最终 A/D Line</div>
+    <div class="value ${finalCum >= 0 ? 'up' : 'down'}">${finalCum >= 0 ? '+' : ''}${finalCum.toLocaleString()}</div>
+    <div class="subtext">24个交易日</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">最高累计 A/D</div>
+    <div class="value up">+${maxCum.toLocaleString()}</div>
+    <div class="subtext">04-20</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">上证指数</div>
+    <div class="value up">${shLast.toLocaleString()}</div>
+    <div class="subtext">区间 ${shChange}% · ${shFirst} → ${shLast}</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">上涨最多日</div>
+    <div class="value up">${maxUpDay.up.toLocaleString()} 只</div>
+    <div class="subtext">${maxUpDay.date} · 跌最多 ${maxDnDay.dn}只 (${maxDnDay.date})</div>
+  </div>
+`;
+
+const labels = adData.map(d => d.date);
+const cumValues = adData.map(d => d.cum);
+const shValues = labels.map(d => shIndexData[d] || null);
+
+// Dual-axis chart: A/D Line (left) + 上证指数 (right)
+new Chart(document.getElementById('adChart'), {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [
+      {
+        label: 'A/D Line',
+        data: cumValues,
+        borderColor: '#22ab94',
+        backgroundColor: ctx => {
+          const c = ctx.chart;
+          if (!c.chartArea) return 'rgba(34,171,148,0.05)';
+          const { ctx: g, chartArea: { top, bottom } } = c;
+          const grad = g.createLinearGradient(0, top, 0, bottom);
+          grad.addColorStop(0, 'rgba(34,171,148,0.25)');
+          grad.addColorStop(1, 'rgba(34,171,148,0.02)');
+          return grad;
+        },
+        borderWidth: 2.5,
+        pointRadius: 3,
+        pointBackgroundColor: '#22ab94',
+        fill: true,
+        tension: 0.18,
+        yAxisID: 'y',
+      },
+      {
+        label: '上证指数',
+        data: shValues,
+        borderColor: '#f0b429',
+        backgroundColor: 'rgba(240,180,41,0.08)',
+        borderWidth: 2,
+        pointRadius: 3,
+        pointBackgroundColor: '#f0b429',
+        pointBorderColor: '#f0b429',
+        fill: false,
+        tension: 0.18,
+        yAxisID: 'y1',
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1e3040',
+        titleColor: '#8aaabc',
+        bodyColor: '#e0e0e0',
+        cornerRadius: 6,
+        padding: 10,
+        callbacks: {
+          label: ctx => {
+            if (ctx.dataset.label === 'A/D Line') {
+              return `A/D Line: ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y.toLocaleString()}`;
+            }
+            return `上证指数: ${ctx.parsed.y.toFixed(2)}`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: '#1e3040', drawTicks: false },
+        ticks: { color: '#5a7a8a', font: { size: 11 } }
+      },
+      y: {
+        type: 'linear',
+        position: 'left',
+        grid: { color: '#1e3040' },
+        ticks: {
+          color: '#22ab94',
+          font: { size: 11 },
+          callback: v => (v >= 0 ? '+' : '') + v.toLocaleString()
+        },
+        title: {
+          display: true,
+          text: 'A/D Line',
+          color: '#22ab94',
+          font: { size: 11 }
+        }
+      },
+      y1: {
+        type: 'linear',
+        position: 'right',
+        grid: { drawOnChartArea: false },
+        ticks: {
+          color: '#f0b429',
+          font: { size: 11 },
+          callback: v => v.toFixed(0)
+        },
+        title: {
+          display: true,
+          text: '上证指数',
+          color: '#f0b429',
+          font: { size: 11 }
+        }
+      }
+    },
+    interaction: { mode: 'index', intersect: false }
+  }
+});
+
+// Daily Diff Bar Chart
+const diffValues = adData.map(d => d.diff);
+const diffColors = adData.map(d => d.diff >= 0 ? '#22ab94' : '#e0524a');
+
+new Chart(document.getElementById('diffChart'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      label: '涨跌差',
+      data: diffValues,
+      backgroundColor: diffColors,
+      borderColor: diffColors,
+      borderWidth: 1,
+      borderRadius: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1e3040',
+        titleColor: '#8aaabc',
+        bodyColor: '#e0e0e0',
+        cornerRadius: 6,
+        padding: 10,
+        callbacks: {
+          label: ctx => `涨跌差: ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y.toLocaleString()}`
+        }
+      }
+    },
+    scales: {
+      x: { grid: { color: '#1e3040', drawTicks: false }, ticks: { color: '#5a7a8a', font: { size: 11 } } },
+      y: { grid: { color: '#1e3040' }, ticks: { color: '#5a7a8a', font: { size: 11 }, callback: v => (v >= 0 ? '+' : '') + v.toLocaleString() } }
+    },
+    interaction: { mode: 'index', intersect: false }
+  }
+});
+
+// Data table
+const tbody = document.getElementById('tableBody');
+adData.forEach(d => {
+  const tr = document.createElement('tr');
+  const diffClass = d.diff >= 0 ? 'up' : 'down';
+  const cumClass = d.cum >= 0 ? 'up' : 'down';
+  const sh = shIndexData[d.date];
+  tr.innerHTML = `
+    <td>${d.date}</td>
+    <td class="up">${d.up.toLocaleString()}</td>
+    <td class="down">${d.dn.toLocaleString()}</td>
+    <td class="${diffClass}">${d.diff >= 0 ? '+' : ''}${d.diff.toLocaleString()}</td>
+    <td class="${cumClass}">${d.cum >= 0 ? '+' : ''}${d.cum.toLocaleString()}</td>
+    <td>${sh.toFixed(2)}</td>
+    <td class="${sh >= shIndexData[adData[Math.max(0, adData.indexOf(d)-1)]?.date || '03-23'] ? 'up' : 'down'}">
+      ${d.date !== '03-23' ? (sh >= 0 ? '+' : '') + (sh - shIndexData[adData[Math.max(0, adData.indexOf(d)-1)].date]).toFixed(2) : '—'}
+    </td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>
