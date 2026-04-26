@@ -29,27 +29,32 @@ fi
 
 echo "A/D Line auto update - $TODAY"
 
-# 1 计算 A/D Line
-LAST_DATE="2026-03-23"
+# 1 检查是否已经有最新数据（防止重复运行）
 if [ -f "$RESULT_FILE" ]; then
     LAST_DATE=$(python3 -c "
 import json
 with open('$RESULT_FILE') as f:
     data = json.load(f)
 print(data['daily'][-1]['date'])
-" 2>/dev/null || echo "2026-03-23")
-fi
-
-START_DATE="$LAST_DATE"
-if [ "$START_DATE" = "$TODAY" ]; then
-    echo "Data already up to date, skip calculation"
+" 2>/dev/null || echo "")
+    if [ "$LAST_DATE" = "$TODAY" ]; then
+        echo "Data already up to date ($TODAY), skip calculation"
+    else
+        echo "Fetching A/D Line data (2026-03-23 ~ $TODAY)..."
+        cd "$SCRIPTS_DIR"
+        if [ -f "$VENV_DIR/bin/activate" ]; then
+            source "$VENV_DIR/bin/activate"
+        fi
+        # 每次都从初始日期开始，确保累计值正确
+        python3 "$SCRIPTS_DIR/ad-line.py" "2026-03-23" "$TODAY" 2>&1
+    fi
 else
-    echo "Fetching A/D Line data ($START_DATE ~ $TODAY)..."
+    echo "Fetching A/D Line data (2026-03-23 ~ $TODAY)..."
     cd "$SCRIPTS_DIR"
     if [ -f "$VENV_DIR/bin/activate" ]; then
         source "$VENV_DIR/bin/activate"
     fi
-    python3 "$SCRIPTS_DIR/ad-line.py" "$START_DATE" "$TODAY" 2>&1
+    python3 "$SCRIPTS_DIR/ad-line.py" "2026-03-23" "$TODAY" 2>&1
 fi
 
 # 2 获取上证指数
