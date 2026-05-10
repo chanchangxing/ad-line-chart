@@ -29,7 +29,7 @@ fi
 
 echo "A/D Line auto update - $TODAY"
 
-# 1 检查是否已经有最新数据（防止重复运行）
+# 1 计算 A/D Line（全量重算，保证累计值正确）
 if [ -f "$RESULT_FILE" ]; then
     LAST_DATE=$(python3 -c "
 import json
@@ -45,7 +45,6 @@ print(data['daily'][-1]['date'])
         if [ -f "$VENV_DIR/bin/activate" ]; then
             source "$VENV_DIR/bin/activate"
         fi
-        # 每次都从初始日期开始，确保累计值正确
         python3 "$SCRIPTS_DIR/ad-line.py" "2026-03-23" "$TODAY" 2>&1
     fi
 else
@@ -57,12 +56,7 @@ else
     python3 "$SCRIPTS_DIR/ad-line.py" "2026-03-23" "$TODAY" 2>&1
 fi
 
-# 2 获取上证指数
-echo "Fetching Shanghai index..."
-SH_JSON=$(curl -s --max-time 15 \
-  "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh000001,day,2026-03-23,$TODAY,101,qfq" 2>/dev/null || echo "{}")
-
-# 3 生成 HTML
+# 2 生成 HTML（含上证指数收盘价 + MA150）
 echo "Generating chart..."
 cd "$SCRIPTS_DIR"
 if [ -f "$VENV_DIR/bin/activate" ]; then
@@ -70,52 +64,37 @@ if [ -f "$VENV_DIR/bin/activate" ]; then
 fi
 
 python3 << 'PYEOF'
-import json, os, re, urllib.request, sys
+import json, os, re, sys
+import akshare as ak
+import pandas as pd
+from datetime import date
 
+# --- 读取 A/D Line 数据 ---
 result_file = os.path.expanduser("~/.openclaw/workspace/scripts/ad-line-result.json")
 with open(result_file) as f:
     ad_data = json.load(f)
 
-today = os.environ.get("TODAY", "2026-04-27")
+# --- 获取上证指数全量历史 + 计算 MA150 ---
+print("  Fetching SH index + MA150...")
+df = ak.stock_zh_index_daily(symbol="sh000001")
+df = df.sort_values("date").reset_index(drop=True)
+df["ma150"] = df["close"].rolling(window=150).mean()
+
+start_dt = date(2026, 3, 23)
+chart_df = df[df["date"] >= start_dt].copy()
+
 sh_data = {}
+for _, row in chart_df.iterrows():
+    d = row["date"]
+    date_short = "{:02d}-{:02d}".format(d.month, d.day)
+    close_val = round(float(row["close"]), 2)
+    v = row["ma150"]
+    ma150_val = round(float(v), 2) if pd.notna(v) else None
+    sh_data[date_short] = {"close": close_val, "ma150": ma150_val}
 
-# Try to fetch SH index data
-sh_url = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh000001,day,2026-03-23,{e},101,qfq".format(e=today)
-try:
-    req = urllib.request.Request(sh_url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        sh_raw = json.loads(resp.read().decode("utf-8"))
-    if sh_raw and "data" in sh_raw:
-        kline = []
-        for k in ["sh000001"]:
-            if k in sh_raw.get("data", {}):
-                kline = sh_raw["data"][k].get("qfqday", []) or sh_raw["data"][k].get("day", [])
-                break
-        for item in kline:
-            date_str = item[0]
-            close_val = float(item[2])
-            sh_data[date_str] = close_val
-    if sh_data:
-        print("  SH index: OK ({n} days)".format(n=len(sh_data)))
-    else:
-        print("  SH index: empty response, using fallback")
-except Exception as e:
-    print("  SH index fetch failed: {err}, using fallback".format(err=e))
+print("  SH index + MA150: OK ({} days)".format(len(sh_data)))
 
-# Fallback data
-if not sh_data:
-    sh_data = {
-        "2026-03-23": 3813.28, "2026-03-24": 3881.28, "2026-03-25": 3931.84,
-        "2026-03-26": 3889.08, "2026-03-27": 3913.72, "2026-03-30": 3923.29,
-        "2026-03-31": 3891.86, "2026-04-01": 3948.55, "2026-04-02": 3919.29,
-        "2026-04-03": 3880.10, "2026-04-07": 3890.16, "2026-04-08": 3995.00,
-        "2026-04-09": 3966.17, "2026-04-10": 3986.22, "2026-04-13": 3988.56,
-        "2026-04-14": 4026.63, "2026-04-15": 4027.21, "2026-04-16": 4055.55,
-        "2026-04-17": 4051.43, "2026-04-20": 4082.13, "2026-04-21": 4085.08,
-        "2026-04-22": 4106.26, "2026-04-23": 4093.25, "2026-04-24": 4079.90,
-    }
-
-# Build data arrays
+# --- 构建每日数据 ---
 daily_data = []
 for d in ad_data["daily"]:
     short_date = d["date"][5:]
@@ -128,18 +107,13 @@ for d in ad_data["daily"]:
         "cum": d["cumulative"],
     })
 
-sh_data_short = {}
-for k, v in sh_data.items():
-    sh_data_short[k[5:]] = v
-
-# Read template
+# --- 更新 HTML ---
 template_file = os.path.expanduser("~/.openclaw/workspace/ad-line-chart/index.html")
 with open(template_file) as f:
     html = f.read()
 
-# Replace data
 ad_str = json.dumps(daily_data, ensure_ascii=False, indent=2)
-sh_str = json.dumps(sh_data_short, ensure_ascii=False, indent=2)
+sh_str = json.dumps(sh_data, ensure_ascii=False, indent=2)
 start_date = ad_data["start"]
 end_date = ad_data["end"]
 
@@ -164,10 +138,10 @@ with open(template_file, "w") as f:
 
 days = len(daily_data)
 last_cum = daily_data[-1]["cum"]
-print("Chart updated: {d} days, final A/D {cum:+d}".format(d=days, cum=last_cum))
+print("Chart updated: {} days, final A/D {:>+d}".format(days, last_cum))
 PYEOF
 
-# 4 推送至 GitHub
+# 3 推送至 GitHub
 echo "Pushing to GitHub Pages..."
 cd "$REPO_DIR"
 git add index.html
