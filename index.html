@@ -92,7 +92,7 @@ td.up { color: #22ab94; } td.down { color: #e0524a; }
     <div class="legend-box">
       <div class="legend-item"><span class="legend-dot" style="background:#22ab94"></span> A/D Line（累计涨跌差）</div>
       <div class="legend-item"><span class="legend-dot" style="background:#f0b429"></span> 上证指数</div>
-      <div class="legend-item"><span class="legend-dot" style="background:rgba(240,180,41,0.4)"></span> 上证 MA150（150日均线）</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#4fc3f7"></span> 上证 MA150（150日均线）</div>
       <div class="legend-item"><span class="legend-dot" style="height:10px;width:10px;border-radius:50%;background:#e0524a"></span> A/D < 0 · A/D > 0</div>
     </div>
     <canvas id="adChart"></canvas>
@@ -589,9 +589,9 @@ new Chart(document.getElementById('adChart'), {
       {
         label: '上证 MA150',
         data: ma150Values,
-        borderColor: 'rgba(255,200,50,0.8)',
+        borderColor: '#4fc3f7',
         borderWidth: 2,
-        borderDash: [6, 3],
+        borderDash: [4, 4],
         pointRadius: 0,
         pointHoverRadius: 4,
         fill: false,
