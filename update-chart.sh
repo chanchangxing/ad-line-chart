@@ -141,12 +141,17 @@ last_cum = daily_data[-1]["cum"]
 print("Chart updated: {} days, final A/D {:>+d}".format(days, last_cum))
 PYEOF
 
+# 生成个股监控数据
+echo "Generating stock data..."
+cd "$REPO_DIR"
+python3 generate_stocks.py 2>&1
+
 # 3 推送至 GitHub
 echo "Pushing to GitHub Pages..."
 cd "$REPO_DIR"
-git add index.html
+git add index.html stocks.json generate_stocks.py
 if ! git diff --cached --quiet; then
-    git commit -m "Daily A/D Line update - $(date +%Y-%m-%d)"
+    git commit -m "Daily update - $(date +%Y-%m-%d)"
     git push origin main 2>&1
     echo "Pushed successfully!"
 else

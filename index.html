@@ -76,6 +76,35 @@ td.up { color: #22ab94; } td.down { color: #e0524a; }
 }
 .legend-item { display: flex; align-items: center; gap: 6px; }
 .legend-dot { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+
+/* ===== 个股监控 ===== */
+.stock-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+.stock-card {
+  background: #162231;
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid #1e3040;
+}
+.stock-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.stock-header .name { font-size: 15px; font-weight: 600; color: #fff; }
+.stock-header .code { font-size: 11px; color: #5a7a8a; }
+.stock-price { font-size: 26px; font-weight: 700; margin-bottom: 2px; }
+.stock-price.up { color: #22ab94; } .stock-price.down { color: #e0524a; }
+.stock-change { font-size: 12px; margin-bottom: 10px; }
+.stock-change.up { color: #22ab94; } .stock-change.down { color: #e0524a; }
+.stock-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 16px; font-size: 11px; margin-bottom: 8px; }
+.stock-row .label { color: #5a7a8a; } .stock-row .val { color: #c0d0e0; text-align: right; }
+.stock-signal-box {
+  margin-top: 10px; padding: 8px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 500;
+  display: flex; justify-content: space-between;
+}
+.stock-signal-box.buy { background: rgba(34,171,148,0.12); color: #22ab94; border: 1px solid rgba(34,171,148,0.25); }
+.stock-signal-box.sell { background: rgba(224,82,74,0.12); color: #e0524a; border: 1px solid rgba(224,82,74,0.25); }
+.stock-signal-box.neutral { background: rgba(106,127,148,0.1); color: #8aaabc; border: 1px solid rgba(106,127,148,0.15); }
+.stock-ma-row { display: flex; gap: 8px; font-size: 10px; color: #5a7a8a; margin-top: 6px; }
+.stock-ma-row span { padding: 2px 6px; border-radius: 3px; background: rgba(106,127,148,0.1); }
+@media (max-width: 768px) { .stock-cards { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -120,6 +149,13 @@ td.up { color: #22ab94; } td.down { color: #e0524a; }
         </thead>
         <tbody id="tableBody"></tbody>
       </table>
+    </div>
+  </div>
+
+  <div class="chart-box" id="stocksSection">
+    <h3>📊 个股监控 <span style="font-size:11px;color:#5a7a8a;font-weight:400">三花智控 · 恺英网络 · 永杉锂业</span></h3>
+    <div class="stock-cards" id="stockCards">
+      <div class="stock-card"><span class="stock-change neutral" style="display:block;text-align:center;padding:20px 0">⏳ 加载中...</span></div>
     </div>
   </div>
 </div>
@@ -726,6 +762,80 @@ adData.forEach(d => {
   `;
   tbody.appendChild(tr);
 });
+
+// ===== 个股监控 =====
+(async function renderStocks() {
+  const container = document.getElementById('stockCards');
+  try {
+    const resp = await fetch('./stocks.json');
+    if (!resp.ok) throw new Error('stocks.json not found');
+    const data = await resp.json();
+    const stocks = data.stocks || [];
+    container.innerHTML = '';
+
+    stocks.forEach(s => {
+      if (s.error) {
+        container.innerHTML += `<div class="stock-card"><span style="color:#5a7a8a">${s.name} ${s.error}</span></div>`;
+        return;
+      }
+
+      const isUp = s.change_pct >= 0;
+      const cClass = isUp ? 'up' : 'down';
+      let sigClass = 'neutral';
+      if (s.signal && s.signal.score >= 3) sigClass = 'buy';
+      else if (s.signal && s.signal.score <= -3) sigClass = 'sell';
+
+      const rsiStatus = s.rsi > 70 ? '超买' : (s.rsi < 30 ? '超卖' : '中性');
+      const rsiColor = s.rsi > 70 ? '#e0524a' : (s.rsi < 30 ? '#22ab94' : '#8aaabc');
+      
+      const maItems = ['ma5','ma10','ma20','ma60'].map(m => {
+        const v = s.mas && s.mas[m] ? s.mas[m].toFixed(2) : '\u2014';
+        return `<span>MA${m.slice(2)}: ${v}</span>`;
+      }).join('');
+
+      container.innerHTML += `
+        <div class="stock-card">
+          <div class="stock-header">
+            <div>
+              <span class="name">${s.name}</span>
+              <span class="code"> ${s.code}</span>
+            </div>
+            ${s.rs ? '<span style="font-size:11px;color:#8aaabc">'+s.rs.emoji+' RS '+s.rs.rating+'</span>' : ''}
+          </div>
+          <div class="stock-price ${cClass}">\u00a5${s.current.toFixed(2)}</div>
+          <div class="stock-change ${cClass}">
+            ${isUp ? '\ud83d\udcc8 +' : '\ud83d\udcc9 '}${s.change.toFixed(2)} (${isUp ? '+' : ''}${s.change_pct.toFixed(2)}%)
+          </div>
+          <div class="stock-row">
+            <span class="label">\u4eca\u5f00</span><span class="val">${s.open.toFixed(2)}</span>
+            <span class="label">\u6628\u6536</span><span class="val">${s.prev_close.toFixed(2)}</span>
+            <span class="label">\u6700\u9ad8</span><span class="val">${s.high.toFixed(2)}</span>
+            <span class="label">\u6700\u4f4e</span><span class="val">${s.low.toFixed(2)}</span>
+            <span class="label">\u6210\u4ea4\u91cf</span><span class="val">${s.volume}</span>
+            <span class="label">\u91cf\u6bd4</span><span class="val">${s.vol_ratio ? s.vol_ratio+'x' : '\u2014'}</span>
+          </div>
+          <div style="margin-top:6px;border-top:1px solid #1e3040;padding-top:6px">
+            <div class="stock-row" style="margin-bottom:0">
+              <span class="label">RSI(14)</span><span class="val" style="color:${rsiColor}">${s.rsi.toFixed(1)} \u00b7 ${rsiStatus}</span>
+              <span class="label">MACD</span><span class="val" style="color:#c0d0e0">${s.macd ? s.macd.signal : '\u2014'}</span>
+              <span class="label">KDJ J</span><span class="val" style="color:${s.kdj && s.kdj.j > 80 ? '#e0524a' : s.kdj && s.kdj.j < 20 ? '#22ab94' : '#c0d0e0'}">${s.kdj ? s.kdj.j.toFixed(1) : '\u2014'}</span>
+              <span class="label">\u8d8b\u52bf</span><span class="val">${s.trend || '\u2014'}</span>
+            </div>
+            ${s.bb ? '<div style="font-size:10px;color:#5a7a8a;margin-top:4px">\u5e03\u6797\uff1a\u4e0a '+s.bb.upper+' \u00b7 \u4e2d '+s.bb.mid+' \u00b7 \u4e0b '+s.bb.lower+'</div>' : ''}
+            <div class="stock-ma-row">${maItems}</div>
+          </div>
+          <div class="stock-signal-box ${sigClass}">
+            <span>${s.signal.emoji} ${s.signal.signal} (${s.signal.score >= 0 ? '+' : ''}${s.signal.score})</span>
+            <span style="font-size:10px;opacity:0.8">${s.signal.reasons.join(' \u00b7 ')}</span>
+          </div>
+          <div style="font-size:10px;color:#4a5a6a;text-align:right;margin-top:4px">${s.updated_at}</div>
+        </div>`;
+    });
+  } catch(e) {
+    container.innerHTML = '<div class="stock-card"><span style="color:#5a7a8a;display:block;text-align:center;padding:20px 0">\u26a0\ufe0f 个股数据未就绪（开盘日收盘后更新）</span></div>';
+    console.warn('stocks.json fetch failed:', e);
+  }
+})();
 </script>
 </body>
 </html>

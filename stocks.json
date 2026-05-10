@@ -1,0 +1,176 @@
+{
+  "stocks": [
+    {
+      "code": "002050",
+      "name": "三花智控",
+      "updated_at": "2026-05-10 21:23",
+      "current": 51.69,
+      "change": 1.37,
+      "change_pct": 2.72,
+      "open": 50.0,
+      "prev_close": 50.32,
+      "high": 53.88,
+      "low": 49.71,
+      "bid": 51.69,
+      "ask": 51.7,
+      "volume": "274万",
+      "amount": "142万",
+      "rsi": 70.8,
+      "macd": {
+        "dif": 0.914,
+        "dea": 0.143,
+        "macd": 1.543,
+        "signal": "多头📈"
+      },
+      "kdj": {
+        "k": 77.3,
+        "d": 67.3,
+        "j": 97.3
+      },
+      "bb": {
+        "upper": 49.88,
+        "mid": 45.98,
+        "lower": 42.08
+      },
+      "mas": {
+        "ma5": 48.38,
+        "ma10": 46.82,
+        "ma20": 45.98,
+        "ma60": 47.09
+      },
+      "vol_ratio": 2.03,
+      "rs": {
+        "emoji": "🌟",
+        "rating": "极强",
+        "excess": 16.3
+      },
+      "trend": "强势上涨 📈",
+      "signal": {
+        "score": 0,
+        "signal": "中性观望",
+        "emoji": "⚪",
+        "reasons": [
+          "RSI超买",
+          "MACD多头",
+          "KDJ超买",
+          "均线多头"
+        ]
+      }
+    },
+    {
+      "code": "002517",
+      "name": "恺英网络",
+      "updated_at": "2026-05-10 21:23",
+      "current": 18.89,
+      "change": 0.16,
+      "change_pct": 0.85,
+      "open": 18.58,
+      "prev_close": 18.73,
+      "high": 19.32,
+      "low": 18.51,
+      "bid": 18.88,
+      "ask": 18.89,
+      "volume": "71万",
+      "amount": "13万",
+      "rsi": 54.5,
+      "macd": {
+        "dif": -0.254,
+        "dea": -0.492,
+        "macd": 0.477,
+        "signal": "多头📈"
+      },
+      "kdj": {
+        "k": 79.1,
+        "d": 63.6,
+        "j": 110.1
+      },
+      "bb": {
+        "upper": 19.71,
+        "mid": 18.14,
+        "lower": 16.57
+      },
+      "mas": {
+        "ma5": 18.41,
+        "ma10": 17.83,
+        "ma20": 18.14,
+        "ma60": 19.92
+      },
+      "vol_ratio": 1.01,
+      "rs": {
+        "emoji": "➡️",
+        "rating": "中性",
+        "excess": -4.1
+      },
+      "trend": "强势上涨 📈",
+      "signal": {
+        "score": 2,
+        "signal": "偏多关注",
+        "emoji": "🟡",
+        "reasons": [
+          "MACD多头",
+          "KDJ超买",
+          "均线多头"
+        ]
+      }
+    },
+    {
+      "code": "603399",
+      "name": "永杉锂业",
+      "updated_at": "2026-05-10 21:23",
+      "current": 23.99,
+      "change": 1.41,
+      "change_pct": 6.24,
+      "open": 22.97,
+      "prev_close": 22.58,
+      "high": 24.84,
+      "low": 22.9,
+      "bid": 23.99,
+      "ask": 24.0,
+      "volume": "147万",
+      "amount": "35万",
+      "rsi": 92.3,
+      "macd": {
+        "dif": 2.679,
+        "dea": 1.602,
+        "macd": 2.154,
+        "signal": "多头📈"
+      },
+      "kdj": {
+        "k": 94.5,
+        "d": 93.6,
+        "j": 96.3
+      },
+      "bb": {
+        "upper": 22.55,
+        "mid": 15.03,
+        "lower": 7.51
+      },
+      "mas": {
+        "ma5": 20.98,
+        "ma10": 17.67,
+        "ma20": 15.03,
+        "ma60": 12.32
+      },
+      "vol_ratio": 2.46,
+      "rs": {
+        "emoji": "🌟",
+        "rating": "极强",
+        "excess": 103.7
+      },
+      "trend": "强势上涨 📈",
+      "signal": {
+        "score": 0,
+        "signal": "中性观望",
+        "emoji": "⚪",
+        "reasons": [
+          "RSI超买",
+          "MACD多头",
+          "KDJ超买",
+          "均线多头"
+        ]
+      }
+    }
+  ],
+  "updated_at": "2026-05-10 21:23:43",
+  "count": 3
+}
