@@ -694,10 +694,11 @@ new Chart(document.getElementById('adChart'), {
     const data = await resp.json();
     const stocks = data.stocks || [];
     container.innerHTML = '';
+    let html = '';
 
     stocks.forEach(s => {
       if (s.error) {
-        container.innerHTML += `<div class="stock-card"><span style="color:#5a7a8a">${s.name} ${s.error}</span></div>`;
+        html += `<div class="stock-card"><span style="color:#5a7a8a">${s.name} ${s.error}</span></div>`;
         return;
       }
 
@@ -715,7 +716,7 @@ new Chart(document.getElementById('adChart'), {
         return `<span>MA${m.slice(2)}: ${v}</span>`;
       }).join('');
 
-      container.innerHTML += `
+      html += `
         <div class="stock-card">
           <div class="stock-header">
             <div>
@@ -753,6 +754,7 @@ new Chart(document.getElementById('adChart'), {
           <div style="font-size:10px;color:#4a5a6a;text-align:right;margin-top:4px">${s.updated_at}</div>
         </div>`;
     });
+    container.innerHTML = html;
   } catch(e) {
     container.innerHTML = '<div class="stock-card"><span style="color:#5a7a8a;display:block;text-align:center;padding:20px 0">\u26a0\ufe0f 个股数据未就绪（开盘日收盘后更新）</span></div>';
     console.warn('stocks.json fetch failed:', e);
@@ -768,10 +770,11 @@ new Chart(document.getElementById('adChart'), {
     const data = await resp.json();
     const items = data.commodities || [];
     container.innerHTML = '';
+    let html = '';
 
     items.forEach(c => {
       if (c.error) {
-        container.innerHTML += `<div class="comm-card"><span style="color:#5a7a8a">${c.emoji} ${c.name}: ${c.error}</span></div>`;
+        html += `<div class="comm-card"><span style="color:#5a7a8a">${c.emoji} ${c.name}: ${c.error}</span></div>`;
         return;
       }
       const isUp = c.change_pct >= 0;
@@ -784,7 +787,7 @@ new Chart(document.getElementById('adChart'), {
         converts = `${cv.per_kg}元/公斤 \u00b7 ${cv.per_jin}元/斤 \u00b7 ${cv.per_ton}元/吨`;
       }
 
-      container.innerHTML += `
+      html += `
         <div class="comm-card">
           <div class="comm-header">
             <span class="comm-emoji">${c.emoji}</span>
@@ -804,6 +807,7 @@ new Chart(document.getElementById('adChart'), {
           ${c.converts ? '<div class="comm-converts">'+converts+'</div>' : ''}
         </div>`;
     });
+    container.innerHTML = html;
 
     if (data.updated_at) {
       container.insertAdjacentHTML('afterbegin', `<div style="font-size:11px;color:#5a7a8a;margin-bottom:8px">\u6570\u636e\u66f4\u65b0\uff1a${data.updated_at}</div>`);
