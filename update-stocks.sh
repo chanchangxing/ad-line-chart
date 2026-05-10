@@ -25,15 +25,16 @@ echo "$(date '+%H:%M:%S') 📊 更新个股监控..."
 
 # 生成 stocks.json
 python3 generate_stocks.py 2>&1
+python3 generate_commodities.py 2>&1
 
 # 检查是否有变化
-if git diff --quiet stocks.json; then
+if git diff --quiet stocks.json commodities.json; then
     echo "$(date '+%H:%M:%S') ✅ 数据无变化，跳过推送"
     exit 0
 fi
 
 # 推送
-git add stocks.json
+git add stocks.json commodities.json
 git commit -m "📊 个股监控 $(date '+%m-%d %H:%M')" --quiet
 git push origin main 2>&1
 

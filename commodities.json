@@ -1,0 +1,142 @@
+{
+  "updated_at": "2026-05-11 00:31",
+  "commodities": [
+    {
+      "id": "pig_futures",
+      "name": "生猪 LH",
+      "emoji": "🐷",
+      "unit": "元/吨",
+      "trade": 11215.0,
+      "preclose": 11380.0,
+      "open": 11360.0,
+      "high": 11385.0,
+      "low": 11195.0,
+      "settlement": 11285.0,
+      "volume": 162107,
+      "position": 179253,
+      "change_pct": -1.53644,
+      "tradedate": "2026-05-08",
+      "converts": {
+        "per_kg": 11.21,
+        "per_jin": 5.61,
+        "per_ton": 11215.0
+      },
+      "sub_contracts": [
+        {
+          "symbol": "LH2607",
+          "name": "生猪2607",
+          "trade": 11215.0,
+          "preclose": 11380.0,
+          "open": 11360.0,
+          "high": 11385.0,
+          "low": 11195.0,
+          "settlement": 11285.0,
+          "volume": 162107,
+          "position": 179253,
+          "change_pct": -1.53644,
+          "tradedate": "2026-05-08"
+        },
+        {
+          "symbol": "LH2609",
+          "name": "生猪2609",
+          "trade": 12360.0,
+          "preclose": 12605.0,
+          "open": 12600.0,
+          "high": 12600.0,
+          "low": 12320.0,
+          "settlement": 12460.0,
+          "volume": 76684,
+          "position": 126348,
+          "change_pct": -2.36967,
+          "tradedate": "2026-05-08"
+        },
+        {
+          "symbol": "LH2611",
+          "name": "生猪2611",
+          "trade": 12785.0,
+          "preclose": 12900.0,
+          "open": 12865.0,
+          "high": 12945.0,
+          "low": 12770.0,
+          "settlement": 12850.0,
+          "volume": 26490,
+          "position": 85985,
+          "change_pct": -1.38835,
+          "tradedate": "2026-05-08"
+        },
+        {
+          "symbol": "LH2701",
+          "name": "生猪2701",
+          "trade": 13360.0,
+          "preclose": 13460.0,
+          "open": 13400.0,
+          "high": 13510.0,
+          "low": 13340.0,
+          "settlement": 13425.0,
+          "volume": 16232,
+          "position": 60940,
+          "change_pct": -1.03704,
+          "tradedate": "2026-05-08"
+        },
+        {
+          "symbol": "LH2703",
+          "name": "生猪2703",
+          "trade": 13100.0,
+          "preclose": 13140.0,
+          "open": 13120.0,
+          "high": 13195.0,
+          "low": 13085.0,
+          "settlement": 13135.0,
+          "volume": 10307,
+          "position": 36251,
+          "change_pct": -0.41809,
+          "tradedate": "2026-05-08"
+        },
+        {
+          "symbol": "LH2605",
+          "name": "生猪2605",
+          "trade": 9650.0,
+          "preclose": 9700.0,
+          "open": 9795.0,
+          "high": 9810.0,
+          "low": 9650.0,
+          "settlement": 9685.0,
+          "volume": 24,
+          "position": 236,
+          "change_pct": -0.41279999999999994,
+          "tradedate": "2026-05-08"
+        }
+      ]
+    },
+    {
+      "id": "soybean_meal",
+      "name": "豆粕 M",
+      "emoji": "🌾",
+      "unit": "元/吨",
+      "trade": 3005.0,
+      "preclose": 3003.0,
+      "open": 3010.0,
+      "high": 3014.0,
+      "low": 3003.0,
+      "volume": 316154,
+      "position": 2565301,
+      "change_pct": 0.46807000000000004,
+      "tradedate": "2026-05-11"
+    },
+    {
+      "id": "corn",
+      "name": "玉米 C",
+      "emoji": "🌽",
+      "unit": "元/吨",
+      "trade": 2368.0,
+      "preclose": 2365.0,
+      "open": 2365.0,
+      "high": 2372.0,
+      "low": 2359.0,
+      "volume": 276856,
+      "position": 1268290,
+      "change_pct": 0.08453,
+      "tradedate": "2026-05-11"
+    }
+  ]
+}

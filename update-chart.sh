@@ -145,11 +145,12 @@ PYEOF
 echo "Generating stock data..."
 cd "$REPO_DIR"
 python3 generate_stocks.py 2>&1
+python3 generate_commodities.py 2>&1
 
 # 3 推送至 GitHub
 echo "Pushing to GitHub Pages..."
 cd "$REPO_DIR"
-git add index.html stocks.json generate_stocks.py
+git add index.html stocks.json generate_stocks.py generate_commodities.py commodities.json update-stocks.sh
 if ! git diff --cached --quiet; then
     git commit -m "Daily update - $(date +%Y-%m-%d)"
     git push origin main 2>&1

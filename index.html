@@ -83,6 +83,27 @@ canvas { width: 100% !important; }
 .stock-ma-row { display: flex; gap: 8px; font-size: 10px; color: #5a7a8a; margin-top: 6px; }
 .stock-ma-row span { padding: 2px 6px; border-radius: 3px; background: rgba(106,127,148,0.1); }
 @media (max-width: 768px) { .stock-cards { grid-template-columns: 1fr; } }
+
+/* ===== 大宗商品 ===== */
+.comm-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+.comm-card {
+  background: #162231;
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid #1e3040;
+}
+.comm-card .comm-header { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+.comm-card .comm-emoji { font-size: 24px; }
+.comm-card .comm-name { font-size: 14px; font-weight: 600; color: #e0e0e0; }
+.comm-card .comm-unit { font-size: 10px; color: #5a7a8a; margin-left: 4px; }
+.comm-card .comm-price { font-size: 22px; font-weight: 700; }
+.comm-card .comm-price.up { color: #22ab94; }
+.comm-card .comm-price.down { color: #e0524a; }
+.comm-card .comm-change { font-size: 12px; margin-bottom: 6px; }
+.comm-card .comm-change.up { color: #22ab94; }
+.comm-card .comm-change.down { color: #e0524a; }
+.comm-card .comm-converts { font-size: 10px; color: #5a7a8a; margin-top: 4px; padding-top: 4px; border-top: 1px solid #1e3040; }
+@media (max-width: 768px) { .comm-cards { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -109,6 +130,13 @@ canvas { width: 100% !important; }
     <h3>📊 个股监控 <span style="font-size:11px;color:#5a7a8a;font-weight:400">三花智控 · 恺英网络 · 永杉锂业</span></h3>
     <div class="stock-cards" id="stockCards">
       <div class="stock-card"><span class="stock-change neutral" style="display:block;text-align:center;padding:20px 0">⏳ 加载中...</span></div>
+    </div>
+  </div>
+
+  <div class="chart-box" id="commoditiesSection">
+    <h3>🏭 大宗商品</h3>
+    <div class="comm-cards" id="commodityCards">
+      <div class="comm-card"><span style="color:#5a7a8a;display:block;text-align:center;padding:16px 0">⏳ 加载中...</span></div>
     </div>
   </div>
 </div>
@@ -728,6 +756,61 @@ new Chart(document.getElementById('adChart'), {
   } catch(e) {
     container.innerHTML = '<div class="stock-card"><span style="color:#5a7a8a;display:block;text-align:center;padding:20px 0">\u26a0\ufe0f 个股数据未就绪（开盘日收盘后更新）</span></div>';
     console.warn('stocks.json fetch failed:', e);
+  }
+})();
+
+// ===== 大宗商品 =====
+(async function renderCommodities() {
+  const container = document.getElementById('commodityCards');
+  try {
+    const resp = await fetch('./commodities.json');
+    if (!resp.ok) throw new Error('commodities.json not found');
+    const data = await resp.json();
+    const items = data.commodities || [];
+    container.innerHTML = '';
+
+    items.forEach(c => {
+      if (c.error) {
+        container.innerHTML += `<div class="comm-card"><span style="color:#5a7a8a">${c.emoji} ${c.name}: ${c.error}</span></div>`;
+        return;
+      }
+      const isUp = c.change_pct >= 0;
+      const cClass = isUp ? 'up' : 'down';
+      const arrow = isUp ? '\ud83d\udcc8' : '\ud83d\udcc9';
+
+      let converts = '';
+      if (c.converts) {
+        const cv = c.converts;
+        converts = `${cv.per_kg}元/公斤 \u00b7 ${cv.per_jin}元/斤 \u00b7 ${cv.per_ton}元/吨`;
+      }
+
+      container.innerHTML += `
+        <div class="comm-card">
+          <div class="comm-header">
+            <span class="comm-emoji">${c.emoji}</span>
+            <div>
+              <span class="comm-name">${c.name}</span>
+              <span class="comm-unit">${c.unit}</span>
+            </div>
+          </div>
+          <div class="comm-price ${cClass}">\u00a5${c.trade.toLocaleString()}</div>
+          <div class="comm-change ${cClass}">
+            ${arrow} ${isUp ? '+' : ''}${c.change_pct.toFixed(2)}%
+          </div>
+          <div style="font-size:11px;color:#6b7f94;display:grid;grid-template-columns:1fr 1fr;gap:2px 12px">
+            <span>\u4eca\u5f00 \u00a5${c.open.toLocaleString()}</span><span>\u6628\u6536 \u00a5${c.preclose.toLocaleString()}</span>
+            <span>\u6700\u9ad8 \u00a5${c.high.toLocaleString()}</span><span>\u6700\u4f4e \u00a5${c.low.toLocaleString()}</span>
+          </div>
+          ${c.converts ? '<div class="comm-converts">'+converts+'</div>' : ''}
+        </div>`;
+    });
+
+    if (data.updated_at) {
+      container.insertAdjacentHTML('afterbegin', `<div style="font-size:11px;color:#5a7a8a;margin-bottom:8px">\u6570\u636e\u66f4\u65b0\uff1a${data.updated_at}</div>`);
+    }
+  } catch(e) {
+    container.innerHTML = '<div class="comm-card"><span style="color:#5a7a8a;display:block;text-align:center;padding:16px 0">\u26a0\ufe0f \u5927\u5b97\u5546\u54c1\u6570\u636e\u672a\u5c31\u7eea</span></div>';
+    console.warn('commodities.json fetch failed:', e);
   }
 })();
 </script>
