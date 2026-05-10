@@ -105,11 +105,6 @@ canvas { width: 100% !important; }
     <canvas id="adChart"></canvas>
   </div>
 
-  <div class="chart-box">
-    <h3>📊 每日涨跌差</h3>
-    <canvas id="diffChart"></canvas>
-  </div>
-
   <div class="chart-box" id="stocksSection">
     <h3>📊 个股监控 <span style="font-size:11px;color:#5a7a8a;font-weight:400">三花智控 · 恺英网络 · 永杉锂业</span></h3>
     <div class="stock-cards" id="stockCards">
@@ -662,46 +657,6 @@ new Chart(document.getElementById('adChart'), {
 });
 
 // Daily Diff Bar Chart
-const diffValues = adData.map(d => d.diff);
-const diffColors = adData.map(d => d.diff >= 0 ? '#22ab94' : '#e0524a');
-
-new Chart(document.getElementById('diffChart'), {
-  type: 'bar',
-  data: {
-    labels,
-    datasets: [{
-      label: '涨跌差',
-      data: diffValues,
-      backgroundColor: diffColors,
-      borderColor: diffColors,
-      borderWidth: 1,
-      borderRadius: 2,
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        backgroundColor: '#1e3040',
-        titleColor: '#8aaabc',
-        bodyColor: '#e0e0e0',
-        cornerRadius: 6,
-        padding: 10,
-        callbacks: {
-          label: ctx => '涨跌差: ' + (ctx.parsed.y >= 0 ? '+' : '') + ctx.parsed.y.toLocaleString()
-        }
-      }
-    },
-    scales: {
-      x: { grid: { color: '#1e3040', drawTicks: false }, ticks: { color: '#5a7a8a', font: { size: 11 } } },
-      y: { grid: { color: '#1e3040' }, ticks: { color: '#5a7a8a', font: { size: 11 }, callback: v => (v >= 0 ? '+' : '') + v.toLocaleString() } }
-    },
-    interaction: { mode: 'index', intersect: false }
-  }
-});
-
 // ===== 个股监控 =====
 (async function renderStocks() {
   const container = document.getElementById('stockCards');
