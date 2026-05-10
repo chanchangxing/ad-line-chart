@@ -14,6 +14,7 @@ STOCKS = [
     {"code": "002050", "name": "三花智控", "market": "sz"},
     {"code": "002517", "name": "恺英网络", "market": "sz"},
     {"code": "603399", "name": "永杉锂业", "market": "sh"},
+    {"code": "600361", "name": "创新新材", "market": "sh"},
 ]
 
 TENCENT_API = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
