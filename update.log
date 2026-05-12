@@ -52,3 +52,9 @@ Traceback (most recent call last):
   File "/Users/chenchanghang/.openclaw/workspace/scripts/ad-line.py", line 11, in <module>
     import os, sys, json, asyncio, aiohttp
 ModuleNotFoundError: No module named 'aiohttp'
+A/D Line auto update - 2026-05-11
+Fetching A/D Line data (2026-03-23 ~ 2026-05-11)...
+Traceback (most recent call last):
+  File "/Users/chenchanghang/.openclaw/workspace/scripts/ad-line.py", line 11, in <module>
+    import os, sys, json, asyncio, aiohttp
+ModuleNotFoundError: No module named 'aiohttp'
