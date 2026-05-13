@@ -94,6 +94,30 @@ for _, row in chart_df.iterrows():
 
 print("  SH index + MA150: OK ({} days)".format(len(sh_data)))
 
+# --- 获取沪铝期货数据 (2026-01-01 至今) ---
+print("  Fetching SHFE Aluminum (AL0) futures...")
+al_df = ak.futures_zh_daily_sina(symbol="AL0")
+al_df["date"] = pd.to_datetime(al_df["date"])
+al_df = al_df.sort_values("date").reset_index(drop=True)
+al_2026 = al_df[al_df["date"] >= "2026-01-01"].copy()
+
+al_data = {}
+for _, row in al_2026.iterrows():
+    d = row["date"]
+    date_short = "{:02d}-{:02d}".format(d.month, d.day)
+    al_data[date_short] = {
+        "close": round(float(row["close"]), 2),
+        "open": round(float(row["open"]), 2),
+        "high": round(float(row["high"]), 2),
+        "low": round(float(row["low"]), 2),
+    }
+
+print("  SHFE Aluminum: OK ({} days, {} ~ {})".format(
+    len(al_2026),
+    al_2026["date"].min().strftime("%Y-%m-%d"),
+    al_2026["date"].max().strftime("%Y-%m-%d")
+))
+
 # --- 构建每日数据 ---
 daily_data = []
 for d in ad_data["daily"]:
@@ -114,6 +138,7 @@ with open(template_file) as f:
 
 ad_str = json.dumps(daily_data, ensure_ascii=False, indent=2)
 sh_str = json.dumps(sh_data, ensure_ascii=False, indent=2)
+al_str = json.dumps(al_data, ensure_ascii=False, indent=2)
 start_date = ad_data["start"]
 end_date = ad_data["end"]
 
@@ -125,6 +150,11 @@ html = re.sub(
 html = re.sub(
     r"const shIndexData = \{.*?\};",
     "const shIndexData = " + sh_str + ";",
+    html, flags=re.DOTALL
+)
+html = re.sub(
+    r"const alFuturesData = \{.*?\};",
+    "const alFuturesData = " + al_str + ";",
     html, flags=re.DOTALL
 )
 html = re.sub(
