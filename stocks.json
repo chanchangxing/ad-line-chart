@@ -3,7 +3,7 @@
     {
       "code": "002050",
       "name": "三花智控",
-      "updated_at": "2026-05-20 15:00",
+      "updated_at": "2026-05-20 15:30",
       "current": 50.55,
       "change": -1.78,
       "change_pct": -3.4,
@@ -58,7 +58,7 @@
     {
       "code": "002517",
       "name": "恺英网络",
-      "updated_at": "2026-05-20 15:00",
+      "updated_at": "2026-05-20 15:30",
       "current": 17.07,
       "change": -0.42,
       "change_pct": -2.4,
@@ -97,7 +97,7 @@
       "rs": {
         "emoji": "📉",
         "rating": "弱势",
-        "excess": -8.1
+        "excess": -8.0
       },
       "trend": "弱势下跌 📉",
       "signal": {
@@ -114,7 +114,7 @@
     {
       "code": "603399",
       "name": "永杉锂业",
-      "updated_at": "2026-05-20 15:00",
+      "updated_at": "2026-05-20 15:30",
       "current": 18.8,
       "change": 0.35,
       "change_pct": 1.9,
@@ -170,7 +170,7 @@
     {
       "code": "600361",
       "name": "创新新材",
-      "updated_at": "2026-05-20 15:00",
+      "updated_at": "2026-05-20 15:30",
       "current": 4.4,
       "change": -0.02,
       "change_pct": -0.45,
@@ -223,6 +223,6 @@
       }
     }
   ],
-  "updated_at": "2026-05-20 15:00:10",
+  "updated_at": "2026-05-20 15:30:08",
   "count": 4
 }
