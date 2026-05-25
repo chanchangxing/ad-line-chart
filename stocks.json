@@ -3,18 +3,18 @@
     {
       "code": "002050",
       "name": "三花智控",
-      "updated_at": "2026-05-25 12:30",
-      "current": 53.71,
-      "change": -0.34,
-      "change_pct": -0.63,
+      "updated_at": "2026-05-25 13:00",
+      "current": 53.73,
+      "change": -0.32,
+      "change_pct": -0.59,
       "open": 54.4,
       "prev_close": 54.05,
       "high": 54.6,
       "low": 53.35,
-      "bid": 53.71,
-      "ask": 53.77,
+      "bid": 53.72,
+      "ask": 53.73,
       "volume": "118万",
-      "amount": "63万",
+      "amount": "64万",
       "rsi": 65.6,
       "macd": {
         "dif": 1.878,
@@ -42,7 +42,7 @@
       "rs": {
         "emoji": "🌟",
         "rating": "极强",
-        "excess": 16.5
+        "excess": 16.4
       },
       "trend": "强势上涨 📈",
       "signal": {
@@ -58,16 +58,16 @@
     {
       "code": "002517",
       "name": "恺英网络",
-      "updated_at": "2026-05-25 12:30",
-      "current": 15.79,
-      "change": -0.67,
-      "change_pct": -4.07,
+      "updated_at": "2026-05-25 13:00",
+      "current": 15.82,
+      "change": -0.64,
+      "change_pct": -3.89,
       "open": 16.53,
       "prev_close": 16.46,
       "high": 16.57,
       "low": 15.73,
-      "bid": 15.79,
-      "ask": 15.8,
+      "bid": 15.81,
+      "ask": 15.82,
       "volume": "52万",
       "amount": "8万",
       "rsi": 35.8,
@@ -114,7 +114,7 @@
     {
       "code": "603399",
       "name": "永杉锂业",
-      "updated_at": "2026-05-25 12:30",
+      "updated_at": "2026-05-25 13:00",
       "current": 17.68,
       "change": -0.27,
       "change_pct": -1.5,
@@ -122,8 +122,8 @@
       "prev_close": 17.95,
       "high": 18.25,
       "low": 17.6,
-      "bid": 17.67,
-      "ask": 17.68,
+      "bid": 17.68,
+      "ask": 17.69,
       "volume": "32万",
       "amount": "6万",
       "rsi": 50.7,
@@ -170,7 +170,7 @@
     {
       "code": "600361",
       "name": "创新新材",
-      "updated_at": "2026-05-25 12:30",
+      "updated_at": "2026-05-25 13:00",
       "current": 4.43,
       "change": -0.02,
       "change_pct": -0.45,
@@ -223,6 +223,6 @@
       }
     }
   ],
-  "updated_at": "2026-05-25 12:30:08",
+  "updated_at": "2026-05-25 13:00:09",
   "count": 4
 }
