@@ -3,18 +3,18 @@
     {
       "code": "002050",
       "name": "三花智控",
-      "updated_at": "2026-05-26 14:30",
-      "current": 54.3,
-      "change": 0.39,
-      "change_pct": 0.72,
+      "updated_at": "2026-05-26 15:02",
+      "current": 54.44,
+      "change": 0.53,
+      "change_pct": 0.98,
       "open": 53.95,
       "prev_close": 53.91,
       "high": 56.0,
       "low": 53.17,
-      "bid": 54.3,
-      "ask": 54.31,
-      "volume": "237万",
-      "amount": "130万",
+      "bid": 54.44,
+      "ask": 54.45,
+      "volume": "254万",
+      "amount": "139万",
       "rsi": 65.0,
       "macd": {
         "dif": 1.952,
@@ -42,7 +42,7 @@
       "rs": {
         "emoji": "🌟",
         "rating": "极强",
-        "excess": 15.9
+        "excess": 15.7
       },
       "trend": "强势上涨 📈",
       "signal": {
@@ -59,18 +59,18 @@
     {
       "code": "002517",
       "name": "恺英网络",
-      "updated_at": "2026-05-26 14:30",
-      "current": 16.28,
-      "change": 0.34,
-      "change_pct": 2.13,
+      "updated_at": "2026-05-26 15:02",
+      "current": 16.39,
+      "change": 0.45,
+      "change_pct": 2.82,
       "open": 15.8,
       "prev_close": 15.94,
-      "high": 16.31,
+      "high": 16.39,
       "low": 15.66,
-      "bid": 16.27,
-      "ask": 16.28,
-      "volume": "55万",
-      "amount": "9万",
+      "bid": 16.38,
+      "ask": 16.39,
+      "volume": "63万",
+      "amount": "10万",
       "rsi": 32.4,
       "macd": {
         "dif": -0.535,
@@ -98,7 +98,7 @@
       "rs": {
         "emoji": "📉",
         "rating": "弱势",
-        "excess": -9.7
+        "excess": -10.0
       },
       "trend": "弱势下跌 📉",
       "signal": {
@@ -115,18 +115,18 @@
     {
       "code": "603399",
       "name": "永杉锂业",
-      "updated_at": "2026-05-26 14:30",
-      "current": 17.39,
-      "change": -0.17,
-      "change_pct": -0.97,
+      "updated_at": "2026-05-26 15:02",
+      "current": 17.41,
+      "change": -0.15,
+      "change_pct": -0.85,
       "open": 17.27,
       "prev_close": 17.56,
       "high": 17.73,
       "low": 16.91,
-      "bid": 17.38,
-      "ask": 17.39,
-      "volume": "43万",
-      "amount": "7万",
+      "bid": 17.41,
+      "ask": 17.42,
+      "volume": "48万",
+      "amount": "8万",
       "rsi": 48.9,
       "macd": {
         "dif": 1.122,
@@ -154,7 +154,7 @@
       "rs": {
         "emoji": "🌟",
         "rating": "极强",
-        "excess": 30.5
+        "excess": 30.3
       },
       "trend": "弱势下跌 📉",
       "signal": {
@@ -171,18 +171,18 @@
     {
       "code": "600361",
       "name": "创新新材",
-      "updated_at": "2026-05-26 14:30",
-      "current": 4.51,
-      "change": 0.09,
-      "change_pct": 2.04,
+      "updated_at": "2026-05-26 15:02",
+      "current": 4.54,
+      "change": 0.12,
+      "change_pct": 2.71,
       "open": 4.38,
       "prev_close": 4.42,
       "high": 4.54,
       "low": 4.29,
-      "bid": 4.51,
-      "ask": 4.52,
-      "volume": "70万",
-      "amount": "3万",
+      "bid": 4.53,
+      "ask": 4.54,
+      "volume": "82万",
+      "amount": "4万",
       "rsi": 50.8,
       "macd": {
         "dif": -0.009,
@@ -210,7 +210,7 @@
       "rs": {
         "emoji": "📉",
         "rating": "弱势",
-        "excess": -6.0
+        "excess": -6.2
       },
       "trend": "偏多震荡 ↗️",
       "signal": {
@@ -224,6 +224,6 @@
       }
     }
   ],
-  "updated_at": "2026-05-26 14:30:11",
+  "updated_at": "2026-05-26 15:02:16",
   "count": 4
 }
