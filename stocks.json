@@ -3,18 +3,18 @@
     {
       "code": "002050",
       "name": "三花智控",
-      "updated_at": "2026-06-08 10:50",
-      "current": 47.88,
-      "change": 0.37,
-      "change_pct": 0.78,
+      "updated_at": "2026-06-08 10:54",
+      "current": 48.09,
+      "change": 0.58,
+      "change_pct": 1.22,
       "open": 45.5,
       "prev_close": 47.51,
       "high": 48.63,
       "low": 45.5,
-      "bid": 47.86,
-      "ask": 47.88,
-      "volume": "95万",
-      "amount": "45万",
+      "bid": 48.08,
+      "ask": 48.09,
+      "volume": "96万",
+      "amount": "46万",
       "rsi": 46.9,
       "macd": {
         "dif": -0.461,
@@ -42,7 +42,7 @@
       "rs": {
         "emoji": "➡️",
         "rating": "中性",
-        "excess": -2.8
+        "excess": -2.7
       },
       "trend": "弱势下跌 📉",
       "signal": {
@@ -59,17 +59,17 @@
     {
       "code": "002517",
       "name": "恺英网络",
-      "updated_at": "2026-06-08 10:50",
-      "current": 14.94,
-      "change": -0.28,
-      "change_pct": -1.84,
+      "updated_at": "2026-06-08 10:54",
+      "current": 14.89,
+      "change": -0.33,
+      "change_pct": -2.17,
       "open": 14.8,
       "prev_close": 15.22,
       "high": 15.28,
       "low": 14.75,
-      "bid": 14.93,
-      "ask": 14.94,
-      "volume": "22万",
+      "bid": 14.87,
+      "ask": 14.89,
+      "volume": "23万",
       "amount": "3万",
       "rsi": 30.2,
       "macd": {
@@ -115,7 +115,57 @@
     {
       "code": "603399",
       "name": "永杉锂业",
-      "error": "数据不足"
+      "updated_at": "2026-06-08 10:54",
+      "current": 17.15,
+      "change": -0.13,
+      "change_pct": -0.75,
+      "open": 16.6,
+      "prev_close": 17.28,
+      "high": 17.86,
+      "low": 16.6,
+      "bid": 17.14,
+      "ask": 17.15,
+      "volume": "37万",
+      "amount": "6万",
+      "rsi": 48.7,
+      "macd": {
+        "dif": 0.039,
+        "dea": 0.492,
+        "macd": -0.906,
+        "signal": "空头📉"
+      },
+      "kdj": {
+        "k": 37.9,
+        "d": 33.2,
+        "j": 47.2
+      },
+      "bb": {
+        "upper": 23.81,
+        "mid": 18.96,
+        "lower": 14.11
+      },
+      "mas": {
+        "ma5": 17.28,
+        "ma10": 17.33,
+        "ma20": 18.96,
+        "ma60": 14.96
+      },
+      "vol_ratio": 1.02,
+      "rs": {
+        "emoji": "💀",
+        "rating": "极弱",
+        "excess": -22.6
+      },
+      "trend": "弱势下跌 📉",
+      "signal": {
+        "score": -3,
+        "signal": "偏空谨慎",
+        "emoji": "🔴",
+        "reasons": [
+          "MACD空头",
+          "均线空头"
+        ]
+      }
     },
     {
       "code": "600361",
