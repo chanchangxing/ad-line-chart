@@ -3,7 +3,7 @@
     {
       "code": "002050",
       "name": "三花智控",
-      "updated_at": "2026-06-12 15:12",
+      "updated_at": "2026-06-12 15:47",
       "current": 44.81,
       "change": -0.88,
       "change_pct": -1.93,
@@ -58,18 +58,18 @@
     {
       "code": "002517",
       "name": "恺英网络",
-      "updated_at": "2026-06-12 15:12",
-      "current": 14.73,
-      "change": 0.55,
-      "change_pct": 3.88,
-      "open": 14.36,
-      "prev_close": 14.18,
-      "high": 14.9,
-      "low": 14.16,
-      "bid": 14.73,
-      "ask": 14.74,
-      "volume": "74万",
-      "amount": "11万",
+      "updated_at": "2026-06-12 16:16",
+      "current": 14.18,
+      "prev_close": 14.52,
+      "change": -0.34,
+      "change_pct": -2.34,
+      "open": 14.37,
+      "high": 14.51,
+      "low": 14.08,
+      "bid": null,
+      "ask": null,
+      "volume": "43万",
+      "amount": "N/A",
       "rsi": 25.0,
       "macd": {
         "dif": -0.856,
@@ -115,7 +115,7 @@
     {
       "code": "603399",
       "name": "永杉锂业",
-      "updated_at": "2026-06-12 15:12",
+      "updated_at": "2026-06-12 16:16",
       "current": 20.45,
       "change": 1.27,
       "change_pct": 6.62,
@@ -171,7 +171,7 @@
     {
       "code": "600361",
       "name": "创新新材",
-      "updated_at": "2026-06-12 15:12",
+      "updated_at": "2026-06-12 16:16",
       "current": 4.13,
       "change": 0.14,
       "change_pct": 3.51,
@@ -225,6 +225,6 @@
       }
     }
   ],
-  "updated_at": "2026-06-12 15:12:23",
+  "updated_at": "2026-06-12 16:16:19",
   "count": 4
 }
