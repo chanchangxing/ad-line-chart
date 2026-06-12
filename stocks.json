@@ -3,18 +3,18 @@
     {
       "code": "002050",
       "name": "三花智控",
-      "updated_at": "2026-06-12 00:52",
-      "current": 45.69,
-      "change": 0.33,
-      "change_pct": 0.73,
-      "open": 44.5,
-      "prev_close": 45.36,
-      "high": 46.17,
-      "low": 43.5,
-      "bid": 45.68,
-      "ask": 45.69,
-      "volume": "105万",
-      "amount": "47万",
+      "updated_at": "2026-06-12 10:26",
+      "current": 46.55,
+      "change": 0.86,
+      "change_pct": 1.88,
+      "open": 46.15,
+      "prev_close": 45.69,
+      "high": 47.3,
+      "low": 46.03,
+      "bid": 46.55,
+      "ask": 46.57,
+      "volume": "45万",
+      "amount": "21万",
       "rsi": 42.0,
       "macd": {
         "dif": -0.749,
@@ -40,9 +40,9 @@
       },
       "vol_ratio": 0.68,
       "rs": {
-        "emoji": "➡️",
-        "rating": "中性",
-        "excess": -3.0
+        "emoji": "📉",
+        "rating": "弱势",
+        "excess": -5.3
       },
       "trend": "弱势下跌 📉",
       "signal": {
@@ -58,18 +58,18 @@
     {
       "code": "002517",
       "name": "恺英网络",
-      "updated_at": "2026-06-12 00:52",
-      "current": 14.18,
-      "change": -0.34,
-      "change_pct": -2.34,
-      "open": 14.37,
-      "prev_close": 14.52,
-      "high": 14.51,
-      "low": 14.08,
-      "bid": 14.17,
-      "ask": 14.18,
-      "volume": "43万",
-      "amount": "6万",
+      "updated_at": "2026-06-12 10:26",
+      "current": 14.31,
+      "change": 0.13,
+      "change_pct": 0.92,
+      "open": 14.36,
+      "prev_close": 14.18,
+      "high": 14.6,
+      "low": 14.16,
+      "bid": 14.29,
+      "ask": 14.3,
+      "volume": "23万",
+      "amount": "3万",
       "rsi": 25.0,
       "macd": {
         "dif": -0.856,
@@ -95,9 +95,9 @@
       },
       "vol_ratio": 0.98,
       "rs": {
-        "emoji": "📉",
-        "rating": "弱势",
-        "excess": -14.6
+        "emoji": "💀",
+        "rating": "极弱",
+        "excess": -16.9
       },
       "trend": "弱势下跌 📉",
       "signal": {
@@ -115,73 +115,22 @@
     {
       "code": "603399",
       "name": "永杉锂业",
-      "updated_at": "2026-06-12 00:52",
-      "current": 19.18,
-      "change": 1.74,
-      "change_pct": 9.98,
-      "open": 17.42,
-      "prev_close": 17.44,
-      "high": 19.18,
-      "low": 17.18,
-      "bid": 19.18,
-      "ask": 0.0,
-      "volume": "91万",
-      "amount": "17万",
-      "rsi": 57.2,
-      "macd": {
-        "dif": 0.142,
-        "dea": 0.235,
-        "macd": -0.185,
-        "signal": "空头📉"
-      },
-      "kdj": {
-        "k": 66.5,
-        "d": 51.2,
-        "j": 97.2
-      },
-      "bb": {
-        "upper": 19.98,
-        "mid": 17.89,
-        "lower": 15.81
-      },
-      "mas": {
-        "ma5": 17.79,
-        "ma10": 17.6,
-        "ma20": 17.89,
-        "ma60": 15.41
-      },
-      "vol_ratio": 1.15,
-      "rs": {
-        "emoji": "➡️",
-        "rating": "中性",
-        "excess": -4.5
-      },
-      "trend": "强势上涨 📈",
-      "signal": {
-        "score": -2,
-        "signal": "偏空谨慎",
-        "emoji": "🔴",
-        "reasons": [
-          "MACD空头",
-          "KDJ超买",
-          "均线多头"
-        ]
-      }
+      "error": "数据不足"
     },
     {
       "code": "600361",
       "name": "创新新材",
-      "updated_at": "2026-06-12 00:52",
-      "current": 3.99,
-      "change": 0.08,
-      "change_pct": 2.05,
-      "open": 3.85,
-      "prev_close": 3.91,
-      "high": 4.0,
-      "low": 3.83,
-      "bid": 3.98,
-      "ask": 3.99,
-      "volume": "69万",
+      "updated_at": "2026-06-12 11:00",
+      "current": 4.12,
+      "change": 0.13,
+      "change_pct": 3.26,
+      "open": 4.01,
+      "prev_close": 3.99,
+      "high": 4.13,
+      "low": 3.92,
+      "bid": 4.12,
+      "ask": 4.13,
+      "volume": "63万",
       "amount": "3万",
       "rsi": 36.5,
       "macd": {
@@ -208,9 +157,9 @@
       },
       "vol_ratio": 0.8,
       "rs": {
-        "emoji": "➡️",
-        "rating": "中性",
-        "excess": -4.3
+        "emoji": "📉",
+        "rating": "弱势",
+        "excess": -6.6
       },
       "trend": "弱势下跌 📉",
       "signal": {
@@ -225,6 +174,6 @@
       }
     }
   ],
-  "updated_at": "2026-06-12 00:52:31",
+  "updated_at": "2026-06-12 11:00:03",
   "count": 4
 }
