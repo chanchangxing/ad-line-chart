@@ -3,7 +3,7 @@
     {
       "code": "002050",
       "name": "三花智控",
-      "updated_at": "2026-06-30 15:33",
+      "updated_at": "2026-06-30 17:03",
       "current": 43.83,
       "change": 2.56,
       "change_pct": 6.2,
@@ -59,7 +59,7 @@
     {
       "code": "002517",
       "name": "恺英网络",
-      "updated_at": "2026-06-30 15:33",
+      "updated_at": "2026-06-30 17:03",
       "current": 16.25,
       "change": 0.08,
       "change_pct": 0.49,
@@ -115,12 +115,62 @@
     {
       "code": "603399",
       "name": "永杉锂业",
-      "error": "数据不足"
+      "updated_at": "2026-06-30 17:03",
+      "current": 22.48,
+      "change": 1.13,
+      "change_pct": 5.29,
+      "open": 21.14,
+      "prev_close": 21.35,
+      "high": 22.82,
+      "low": 20.86,
+      "bid": 22.48,
+      "ask": 22.49,
+      "volume": "108万",
+      "amount": "24万",
+      "rsi": 57.0,
+      "macd": {
+        "dif": 1.023,
+        "dea": 0.86,
+        "macd": 0.326,
+        "signal": "多头📈"
+      },
+      "kdj": {
+        "k": 60.2,
+        "d": 68.3,
+        "j": 44.0
+      },
+      "bb": {
+        "upper": 23.33,
+        "mid": 19.44,
+        "lower": 15.54
+      },
+      "mas": {
+        "ma5": 21.55,
+        "ma10": 21.02,
+        "ma20": 19.44,
+        "ma60": 17.3
+      },
+      "vol_ratio": 0.99,
+      "rs": {
+        "emoji": "🌟",
+        "rating": "极强",
+        "excess": 18.3
+      },
+      "trend": "强势上涨 📈",
+      "signal": {
+        "score": 3,
+        "signal": "强烈买入",
+        "emoji": "🟢",
+        "reasons": [
+          "MACD多头",
+          "均线多头"
+        ]
+      }
     },
     {
       "code": "600361",
       "name": "创新新材",
-      "updated_at": "2026-06-30 16:02",
+      "updated_at": "2026-06-30 17:03",
       "current": 3.6,
       "change": 0.04,
       "change_pct": 1.12,
@@ -174,6 +224,6 @@
       }
     }
   ],
-  "updated_at": "2026-06-30 16:02:29",
+  "updated_at": "2026-06-30 17:03:44",
   "count": 4
 }
