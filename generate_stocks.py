@@ -5,10 +5,35 @@
 
 指标：RSI(14) · MACD(12/26/9) · KDJ(9/3/3) · 布林带(20) · 均线 · RS评级
 """
-import json, sys
+import json, sys, os, math
 import urllib.request
-import math
 from datetime import datetime
+
+# 彻底禁用代理
+os.environ['NO_PROXY'] = '*'
+os.environ['no_proxy'] = '*'
+os.environ['HTTP_PROXY'] = ''
+os.environ['HTTPS_PROXY'] = ''
+os.environ['http_proxy'] = ''
+os.environ['https_proxy'] = ''
+
+# Monkey-patch requests.get 不走代理（akshare 内部用 requests.get）
+import requests as _requests
+_original_get = _requests.get
+_original_post = _requests.post
+def _no_proxy_get(url, **kwargs):
+    kwargs['proxies'] = {'http': None, 'https': None}
+    kwargs.setdefault('timeout', 30)
+    return _original_get(url, **kwargs)
+def _no_proxy_post(url, **kwargs):
+    kwargs['proxies'] = {'http': None, 'https': None}
+    kwargs.setdefault('timeout', 30)
+    return _original_post(url, **kwargs)
+_requests.get = _no_proxy_get
+_requests.post = _no_proxy_post
+
+import akshare as ak
+import pandas as pd
 
 STOCKS = [
     {"code": "002050", "name": "三花智控", "market": "sz"},
@@ -17,10 +42,10 @@ STOCKS = [
     {"code": "600361", "name": "创新新材", "market": "sh"},
 ]
 
-TENCENT_API = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
-SH_INDEX_SYMBOL = "sh000001"
-
 OUTPUT_FILE = "/Users/chenchanghang/.openclaw/workspace/ad-line-chart/stocks.json"
+
+# 东方财富 K线 API 市场代码映射
+EM_MARKET = {"sh": "1", "sz": "0", "bj": "0"}
 
 
 def fetch_json(url, timeout=20):
@@ -30,18 +55,50 @@ def fetch_json(url, timeout=20):
 
 
 def fetch_klines(code, market, start="2026-01-01", end="2026-12-31"):
-    """从腾讯 API 获取日线数据"""
+    """从 AKShare 腾讯数据源获取前复权日线数据"""
     symbol = f"{market}{code}"
-    today = datetime.now().strftime("%Y-%m-%d")
-    params = f"param={symbol},day,{start},{today},101,qfq"
-    url = f"{TENCENT_API}?{params}"
     try:
-        j = fetch_json(url)
-        data = j.get("data", {}).get(symbol, {})
-        klines = data.get("qfqday") or data.get("day") or []
+        df = ak.stock_zh_a_hist_tx(symbol=symbol, start_date=start,
+                                   end_date=end, adjust="qfq")
+        if df.empty:
+            return []
+        # 转换为统一格式: [date, open, close, high, low, volume, amount]
+        klines = []
+        for _, row in df.iterrows():
+            klines.append([
+                str(row["date"])[:10],             # date
+                str(row["open"]),                    # open
+                str(row["close"]),                   # close
+                str(row["high"]),                    # high
+                str(row["low"]),                     # low
+                str(row["amount"]),                  # volume (amount=成交量)
+                str(row.get("volume", "0")),         # 成交额 (腾讯API可能不提供)
+            ])
         return klines
     except Exception as e:
-        print(f"    ⚠️ {symbol} K线获取失败: {e}", file=sys.stderr)
+        print(f"    ⚠️ {code} K线获取失败: {e}", file=sys.stderr)
+        return []
+
+def fetch_index_klines():
+    """从 AKShare 获取上证指数日线（用于 RS 评级）"""
+    try:
+        df = ak.stock_zh_index_daily(symbol="sh000001")
+        df["date"] = pd.to_datetime(df["date"])
+        df = df[df["date"] >= "2026-01-01"]
+        klines = []
+        for _, row in df.iterrows():
+            klines.append([
+                row["date"].strftime("%Y-%m-%d"),
+                str(row["open"]),
+                str(row["close"]),
+                str(row["high"]),
+                str(row["low"]),
+                str(row["volume"]),
+                "0",
+            ])
+        return klines
+    except Exception as e:
+        print(f"    ⚠️ 上证指数获取失败: {e}", file=sys.stderr)
         return []
 
 
@@ -418,7 +475,7 @@ def main():
     print("📊 生成股票监控数据...")
     
     # 先获取上证指数日线（用于 RS 评级）
-    index_klines = fetch_klines("000001", "sh")
+    index_klines = fetch_index_klines()
     index_closes = [float(k[2]) for k in index_klines] if index_klines else []
     
     results = []
