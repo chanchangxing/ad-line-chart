@@ -7,6 +7,8 @@
 set -euo pipefail
 
 REPO_DIR="$HOME/.openclaw/workspace/ad-line-chart"
+SCRIPTS_DIR="$HOME/.openclaw/workspace/scripts"
+VENV_DIR="$SCRIPTS_DIR/venv"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 export TZ="Asia/Shanghai"
@@ -22,6 +24,11 @@ fi
 cd "$REPO_DIR"
 
 echo "$(date '+%H:%M:%S') 📊 更新个股监控..."
+
+# 激活 venv
+if [ -f "$VENV_DIR/bin/activate" ]; then
+    source "$VENV_DIR/bin/activate"
+fi
 
 # 生成 stocks.json
 python3 generate_stocks.py 2>&1

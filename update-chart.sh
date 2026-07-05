@@ -174,6 +174,9 @@ PYEOF
 # 生成个股监控数据
 echo "Generating stock data..."
 cd "$REPO_DIR"
+if [ -f "$VENV_DIR/bin/activate" ]; then
+    source "$VENV_DIR/bin/activate"
+fi
 python3 generate_stocks.py 2>&1
 
 # 3 推送至 GitHub
