@@ -89,7 +89,7 @@ canvas { width: 100% !important; }
 <div class="container">
   <div class="header">
     <h1>📊 A/D Line × 上证指数 × 沪铝期货</h1>
-    <div class="sub">2026-03-23 ~ 2026-07-20 · A股涨跌比线 vs 大盘走势（含 MA150）+ 大宗商品铝</div>
+    <div class="sub">2026-03-23 ~ 2026-07-21 · A股涨跌比线 vs 大盘走势（含 MA150）+ 大宗商品铝</div>
   </div>
 
   <div class="stats" id="stats"></div>
@@ -766,11 +766,19 @@ const adData = [
   },
   {
     "date": "07-20",
-    "up": 797,
-    "dn": 1753,
-    "flat": 44,
-    "diff": -956,
-    "cum": -25122
+    "up": 1709,
+    "dn": 3413,
+    "flat": 73,
+    "diff": -1704,
+    "cum": -25870
+  },
+  {
+    "date": "07-21",
+    "up": 1519,
+    "dn": 1096,
+    "flat": 52,
+    "diff": 423,
+    "cum": -25447
   }
 ];
 
@@ -1554,6 +1562,12 @@ const alFuturesData = {
     "open": 23170.0,
     "high": 23470.0,
     "low": 22995.0
+  },
+  "07-21": {
+    "close": 23160.0,
+    "open": 23025.0,
+    "high": 23200.0,
+    "low": 22870.0
   }
 };
 
@@ -1877,6 +1891,10 @@ const shIndexData = {
   "07-17": {
     "close": 3764.16,
     "ma150": 4045.98
+  },
+  "07-20": {
+    "close": 3796.28,
+    "ma150": 4045.43
   }
 };
 
