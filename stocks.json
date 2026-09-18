@@ -3,17 +3,17 @@
     {
       "code": "002050",
       "name": "三花智控",
-      "updated_at": "2026-09-17 17:01",
-      "current": 34.64,
-      "change": 0.91,
-      "change_pct": 2.7,
-      "open": 33.5,
-      "prev_close": 33.73,
-      "high": 34.85,
-      "low": 33.45,
-      "bid": 34.64,
-      "ask": 34.65,
-      "volume": "56万",
+      "updated_at": "2026-09-18 17:01",
+      "current": 35.31,
+      "change": 0.67,
+      "change_pct": 1.93,
+      "open": 35.33,
+      "prev_close": 34.64,
+      "high": 36.13,
+      "low": 34.9,
+      "bid": 35.3,
+      "ask": 35.31,
+      "volume": "53万",
       "amount": "19万",
       "rsi": 40.6,
       "macd": {
@@ -42,7 +42,7 @@
       "rs": {
         "emoji": "➡️",
         "rating": "中性",
-        "excess": -4.1
+        "excess": -3.4
       },
       "trend": "弱势下跌 📉",
       "signal": {
@@ -58,46 +58,46 @@
     {
       "code": "002517",
       "name": "恺英网络",
-      "updated_at": "2026-09-17 17:01",
-      "current": 16.54,
-      "change": -0.27,
-      "change_pct": -1.61,
-      "open": 16.68,
-      "prev_close": 16.81,
-      "high": 16.81,
-      "low": 16.38,
-      "bid": 16.54,
-      "ask": 16.55,
-      "volume": "40万",
-      "amount": "7万",
-      "rsi": 46.5,
+      "updated_at": "2026-09-18 17:01",
+      "current": 16.61,
+      "change": 0.07,
+      "change_pct": 0.42,
+      "open": 16.65,
+      "prev_close": 16.54,
+      "high": 16.69,
+      "low": 16.33,
+      "bid": 16.6,
+      "ask": 16.61,
+      "volume": "48万",
+      "amount": "8万",
+      "rsi": 44.8,
       "macd": {
-        "dif": 0.071,
-        "dea": 0.094,
-        "macd": -0.046,
-        "signal": "死叉📉"
+        "dif": -0.029,
+        "dea": 0.056,
+        "macd": -0.169,
+        "signal": "空头📉"
       },
       "kdj": {
-        "k": 36.4,
-        "d": 52.2,
-        "j": 4.6
+        "k": 23.5,
+        "d": 37.1,
+        "j": -3.7
       },
       "bb": {
         "upper": 17.87,
         "mid": 17.02,
-        "lower": 16.18
+        "lower": 16.16
       },
       "mas": {
-        "ma5": 17.31,
-        "ma10": 17.35,
+        "ma5": 16.86,
+        "ma10": 17.22,
         "ma20": 17.02,
-        "ma60": 16.88
+        "ma60": 16.9
       },
-      "vol_ratio": 0.98,
+      "vol_ratio": 0.84,
       "rs": {
         "emoji": "➡️",
         "rating": "中性",
-        "excess": 0.4
+        "excess": 0.7
       },
       "trend": "弱势下跌 📉",
       "signal": {
@@ -114,54 +114,55 @@
     {
       "code": "603399",
       "name": "永杉锂业",
-      "updated_at": "2026-09-17 17:01",
-      "current": 13.83,
-      "change": 0.05,
-      "change_pct": 0.36,
-      "open": 13.71,
-      "prev_close": 13.78,
-      "high": 13.94,
-      "low": 13.55,
-      "bid": 13.83,
-      "ask": 13.84,
-      "volume": "28万",
+      "updated_at": "2026-09-18 17:01",
+      "current": 13.8,
+      "change": -0.03,
+      "change_pct": -0.22,
+      "open": 13.9,
+      "prev_close": 13.83,
+      "high": 13.95,
+      "low": 13.67,
+      "bid": 13.79,
+      "ask": 13.8,
+      "volume": "29万",
       "amount": "4万",
-      "rsi": 42.2,
+      "rsi": 41.9,
       "macd": {
-        "dif": -0.485,
-        "dea": -0.479,
-        "macd": -0.012,
-        "signal": "空头📉"
+        "dif": -0.461,
+        "dea": -0.476,
+        "macd": 0.029,
+        "signal": "金叉📈"
       },
       "kdj": {
-        "k": 49.6,
-        "d": 35.0,
-        "j": 78.6
+        "k": 56.6,
+        "d": 42.2,
+        "j": 85.4
       },
       "bb": {
-        "upper": 15.56,
-        "mid": 14.31,
-        "lower": 13.06
+        "upper": 15.47,
+        "mid": 14.25,
+        "lower": 13.03
       },
       "mas": {
-        "ma5": 13.64,
-        "ma10": 13.75,
-        "ma20": 14.31,
-        "ma60": 15.61
+        "ma5": 13.73,
+        "ma10": 13.74,
+        "ma20": 14.25,
+        "ma60": 15.5
       },
-      "vol_ratio": 1.17,
+      "vol_ratio": 1.08,
       "rs": {
-        "emoji": "➡️",
-        "rating": "中性",
-        "excess": -1.6
+        "emoji": "📉",
+        "rating": "弱势",
+        "excess": -7.6
       },
-      "trend": "弱势下跌 📉",
+      "trend": "偏多震荡 ↗️",
       "signal": {
-        "score": -3,
-        "signal": "偏空谨慎",
-        "emoji": "🔴",
+        "score": 0,
+        "signal": "中性观望",
+        "emoji": "⚪",
         "reasons": [
-          "MACD空头",
+          "MACD多头",
+          "KDJ超买",
           "均线空头"
         ]
       }
@@ -169,46 +170,46 @@
     {
       "code": "600361",
       "name": "创新新材",
-      "updated_at": "2026-09-17 17:01",
-      "current": 3.49,
-      "change": -0.04,
-      "change_pct": -1.13,
-      "open": 3.51,
-      "prev_close": 3.53,
-      "high": 3.54,
-      "low": 3.48,
-      "bid": 3.49,
-      "ask": 3.5,
-      "volume": "22万",
-      "amount": "7571",
-      "rsi": 37.9,
+      "updated_at": "2026-09-18 17:01",
+      "current": 3.5,
+      "change": 0.01,
+      "change_pct": 0.29,
+      "open": 3.52,
+      "prev_close": 3.49,
+      "high": 3.55,
+      "low": 3.5,
+      "bid": 3.5,
+      "ask": 3.51,
+      "volume": "30万",
+      "amount": "1万",
+      "rsi": 38.9,
       "macd": {
-        "dif": -0.043,
-        "dea": -0.02,
-        "macd": -0.046,
+        "dif": -0.047,
+        "dea": -0.025,
+        "macd": -0.044,
         "signal": "空头📉"
       },
       "kdj": {
-        "k": 16.7,
-        "d": 25.4,
-        "j": -0.7
+        "k": 14.5,
+        "d": 21.7,
+        "j": -0.1
       },
       "bb": {
-        "upper": 3.84,
-        "mid": 3.66,
-        "lower": 3.48
+        "upper": 3.85,
+        "mid": 3.65,
+        "lower": 3.46
       },
       "mas": {
-        "ma5": 3.53,
-        "ma10": 3.61,
-        "ma20": 3.66,
+        "ma5": 3.52,
+        "ma10": 3.59,
+        "ma20": 3.65,
         "ma60": 3.63
       },
-      "vol_ratio": 0.63,
+      "vol_ratio": 0.92,
       "rs": {
         "emoji": "➡️",
         "rating": "中性",
-        "excess": -3.5
+        "excess": -3.7
       },
       "trend": "弱势下跌 📉",
       "signal": {
@@ -223,6 +224,6 @@
       }
     }
   ],
-  "updated_at": "2026-09-17 17:01:05",
+  "updated_at": "2026-09-18 17:01:08",
   "count": 4
 }
